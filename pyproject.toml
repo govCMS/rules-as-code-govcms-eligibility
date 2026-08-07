@@ -3,16 +3,16 @@ build-backend = "setuptools.build_meta"
 requires = [ "setuptools>=61" ]
 
 [project]
-name = "openfisca-country_template"
-version = "8.0.3"
-description = "OpenFisca Rules as Code model for Country-Template."
+name = "openfisca-govcms_eligibility"
+version = "0.0.1"
+description = "OpenFisca Rules as Code model for GovCMS Eligibility."
 readme = "README.md"
 keywords = [ "benefit", "microsimulation", "rac", "rules-as-code", "tax" ]
 maintainers = [  ]
 authors = [  ]
 requires-python = ">=3.9"
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 1 - Planning",
     "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: POSIX",
     "Programming Language :: Python",
@@ -43,11 +43,11 @@ dev = [
 ]
 
 [project.urls]
-Changelog = "https://github.com/openfisca/country-template/blob/main/CHANGELOG.md"
+Changelog = "https://github.com/govCMS/rules-as-code-govcms-eligibility/blob/main/CHANGELOG.md"
 Documentation = "https://openfisca.org/doc"
-Homepage = "https://github.com/openfisca/country-template"
-Issues = "https://github.com/openfisca/country-template/issues"
-Repository = "https://github.com/openfisca/country-template"
+Homepage = "https://github.com/govCMS/rules-as-code-govcms-eligibility"
+Issues = "https://github.com/govCMS/rules-as-code-govcms-eligibility/issues"
+Repository = "https://github.com/govCMS/rules-as-code-govcms-eligibility"
 
 [tool.ruff]
 target-version = "py39"
@@ -72,7 +72,7 @@ lint.ignore = [
 lint.pydocstyle.convention = "google"
 
 [tool.ruff.lint.isort]
-known-first-party = [ "openfisca_country_template" ]
+known-first-party = [ "openfisca_govcms_eligibility" ]
 combine-as-imports = true
 force-single-line = false
 
@@ -83,5 +83,5 @@ max_supported_python = "3.11"
 
 [tool.pytest.ini_options]
 addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings --import-mode importlib"
-testpaths = [ "openfisca_country_template/tests" ]
+testpaths = [ "openfisca_govcms_eligibility/tests" ]
 python_files = "**/*.py"

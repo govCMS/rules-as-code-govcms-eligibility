@@ -57,7 +57,7 @@ Examples:
 
 ### Changelog
 
-openfisca-country_template changes must be understood by users who don't
+openfisca-govcms_eligibility changes must be understood by users who don't
 necessarily work on the code. The Changelog must therefore be as explicit as
 possible.
 
