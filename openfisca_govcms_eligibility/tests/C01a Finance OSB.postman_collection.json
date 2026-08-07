@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "6b312d7b-5fe6-45d5-a90f-751b044940ae",
+		"name": "C01a Finance OSB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11737992"
+	},
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8800",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Variables",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/variables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"variables"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Variables",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/variables",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"variables"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "gunicorn"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 19 Sep 2024 06:01:18 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "3558"
+						},
+						{
+							"key": "Country-Package",
+							"value": "openfisca-rules"
+						},
+						{
+							"key": "Country-Package-Version",
+							"value": "6.0.1"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"australian_government_department_or_entity_eligible\": {\n        \"description\": \"Eligibility for Australian Government Department or Entity.\",\n        \"href\": \"http://localhost:8800/variable/australian_government_department_or_entity_eligible\"\n    },\n    \"australian_government_department_or_entity_type\": {\n        \"description\": \"Which of the following applies to your organisation?\",\n        \"href\": \"http://localhost:8800/variable/australian_government_department_or_entity_type\"\n    },\n    \"australian_government_name\": {\n        \"description\": \"Australian government name\",\n        \"href\": \"http://localhost:8800/variable/australian_government_name\"\n    },\n    \"australian_government_name_eligible\": {\n        \"description\": \"australian_government_name_eligible\",\n        \"href\": \"http://localhost:8800/variable/australian_government_name_eligible\"\n    },\n    \"developer_and_dev_partner_eligible\": {\n        \"description\": \"Eligibility for Educational institution.\",\n        \"href\": \"http://localhost:8800/variable/developer_and_dev_partner_eligible\"\n    },\n    \"developer_and_dev_partner_type\": {\n        \"description\": \"Which of the following applies to your organisation?\",\n        \"href\": \"http://localhost:8800/variable/developer_and_dev_partner_type\"\n    },\n    \"educational_institution_eligible\": {\n        \"description\": \"Eligibility for Educational institution.\",\n        \"href\": \"http://localhost:8800/variable/educational_institution_eligible\"\n    },\n    \"educational_institution_type\": {\n        \"description\": \"Which of the following applies to your organisation?\",\n        \"href\": \"http://localhost:8800/variable/educational_institution_type\"\n    },\n    \"govcms_eligible\": {\n        \"description\": \"Eligibility for the GovCMS program.\",\n        \"href\": \"http://localhost:8800/variable/govcms_eligible\"\n    },\n    \"local_government_council_or_entity_eligible\": {\n        \"description\": \"Eligibility for Local government council or entity.\",\n        \"href\": \"http://localhost:8800/variable/local_government_council_or_entity_eligible\"\n    },\n    \"local_government_council_or_entity_type\": {\n        \"description\": \"Which of the following applies to your organisation?\",\n        \"href\": \"http://localhost:8800/variable/local_government_council_or_entity_type\"\n    },\n    \"materiality\": {\n        \"description\": \"Materiality\",\n        \"href\": \"http://localhost:8800/variable/materiality\"\n    },\n    \"organisation_type\": {\n        \"description\": \"What type of organisation are you?\",\n        \"href\": \"http://localhost:8800/variable/organisation_type\"\n    },\n    \"other_organisation_or_entity_eligible\": {\n        \"description\": \"Eligibility for Educational institution.\",\n        \"href\": \"http://localhost:8800/variable/other_organisation_or_entity_eligible\"\n    },\n    \"portfolio\": {\n        \"description\": \"Portfolio\",\n        \"href\": \"http://localhost:8800/variable/portfolio\"\n    },\n    \"state_territory_government_department_or_entity_eligible\": {\n        \"description\": \"Eligibility for state territory government department or entity.\",\n        \"href\": \"http://localhost:8800/variable/state_territory_government_department_or_entity_eligible\"\n    },\n    \"state_territory_government_department_or_entity_type\": {\n        \"description\": \"Which of the following applies to your organisation?\",\n        \"href\": \"http://localhost:8800/variable/state_territory_government_department_or_entity_type\"\n    },\n    \"type_of_body\": {\n        \"description\": \"Type of body\",\n        \"href\": \"http://localhost:8800/variable/type_of_body\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Australian Government Name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"persons\": {\n    \"personA\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Department of Agriculture, Fisheries and Forestry\"\n      },\n      \"type_of_body\": {\n        \"2024-03-01\": null\n      },\n      \"materiality\": {\n        \"2024-03-01\": null\n      },\n      \"portfolio\": {\n        \"2024-03-01\": null\n      }\n    },\n    \"personB\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Regional Investment Corporation\"\n      },\n      \"type_of_body\": {\n        \"2024-03-01\": null\n      },\n      \"materiality\": {\n        \"2024-03-01\": null\n      },\n      \"portfolio\": {\n        \"2024-03-01\": null\n      }\n    },\n    \"personC\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Australian Security Intelligence Organisation\"\n      },\n      \"type_of_body\": {\n        \"2024-03-01\": null\n      },\n      \"materiality\": {\n        \"2024-03-01\": null\n      },\n      \"portfolio\": {\n        \"2024-03-01\": null\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/calculate",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"calculate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Australian Government Name",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"persons\": {\n    \"personA\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Department of Agriculture, Fisheries and Forestry\"\n      },\n      \"type_of_body\": {\n        \"2024-03-01\": null\n      },\n      \"materiality\": {\n        \"2024-03-01\": null\n      },\n      \"portfolio\": {\n        \"2024-03-01\": null\n      }\n    },\n    \"personB\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Regional Investment Corporation\"\n      },\n      \"type_of_body\": {\n        \"2024-03-01\": null\n      },\n      \"materiality\": {\n        \"2024-03-01\": null\n      },\n      \"portfolio\": {\n        \"2024-03-01\": null\n      }\n    },\n    \"personC\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Australian Security Intelligence Organisation\"\n      },\n      \"type_of_body\": {\n        \"2024-03-01\": null\n      },\n      \"materiality\": {\n        \"2024-03-01\": null\n      },\n      \"portfolio\": {\n        \"2024-03-01\": null\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/calculate",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"calculate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "gunicorn"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 19 Sep 2024 06:01:52 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "814"
+						},
+						{
+							"key": "Country-Package",
+							"value": "openfisca-rules"
+						},
+						{
+							"key": "Country-Package-Version",
+							"value": "6.0.1"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"persons\": {\n        \"personA\": {\n            \"australian_government_name\": {\n                \"2024-03-01\": \"Department of Agriculture, Fisheries and Forestry\"\n            },\n            \"materiality\": {\n                \"2024-03-01\": \"Material\"\n            },\n            \"portfolio\": {\n                \"2024-03-01\": \"Agriculture, Fisheries and Forestry\"\n            },\n            \"type_of_body\": {\n                \"2024-03-01\": \"A. Non Corporate Commonwealth Entity\"\n            }\n        },\n        \"personB\": {\n            \"australian_government_name\": {\n                \"2024-03-01\": \"Regional Investment Corporation\"\n            },\n            \"materiality\": {\n                \"2024-03-01\": \"Small\"\n            },\n            \"portfolio\": {\n                \"2024-03-01\": \"Agriculture, Fisheries and Forestry\"\n            },\n            \"type_of_body\": {\n                \"2024-03-01\": \"B. Corporate Commonwealth Entity\"\n            }\n        },\n        \"personC\": {\n            \"australian_government_name\": {\n                \"2024-03-01\": \"Australian Security Intelligence Organisation\"\n            },\n            \"materiality\": {\n                \"2024-03-01\": \"Material\"\n            },\n            \"portfolio\": {\n                \"2024-03-01\": \"Attorney-General's\"\n            },\n            \"type_of_body\": {\n                \"2024-03-01\": \"A. Non Corporate Commonwealth Entity\"\n            }\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Australian Government Department Or Entity Test 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"persons\": {\n    \"personA\": {\n      \"organisation_type\": {\n        \"2024-03-01\": \"australian_government_department_or_entity\"\n      },\n      \"australian_government_department_or_entity_eligible\": {\n        \"2024-03-01\": null\n      },\n      \"govcms_eligible\": {\n        \"2024-03-01\": null\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/calculate",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"calculate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Australian Government Department Or Entity Test 1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"persons\": {\n    \"personA\": {\n      \"organisation_type\": {\n        \"2024-03-01\": \"australian_government_department_or_entity\"\n      },\n      \"australian_government_department_or_entity_eligible\": {\n        \"2024-03-01\": null\n      },\n      \"govcms_eligible\": {\n        \"2024-03-01\": null\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/calculate",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"calculate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "gunicorn"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 19 Sep 2024 06:01:59 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "238"
+						},
+						{
+							"key": "Country-Package",
+							"value": "openfisca-rules"
+						},
+						{
+							"key": "Country-Package-Version",
+							"value": "6.0.1"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"persons\": {\n        \"personA\": {\n            \"australian_government_department_or_entity_eligible\": {\n                \"2024-03-01\": \"not_eligible\"\n            },\n            \"govcms_eligible\": {\n                \"2024-03-01\": \"not_eligible\"\n            },\n            \"organisation_type\": {\n                \"2024-03-01\": \"australian_government_department_or_entity\"\n            }\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Australian Government Department Or Entity Test 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"persons\": {\n    \"personA\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Department of Agriculture, Fisheries and Forestry\"\n      },\n      \"australian_government_department_or_entity_eligible\": {\n        \"2024-03-01\": null\n      },\n      \"govcms_eligible\": {\n        \"2024-03-01\": null\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/calculate",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"calculate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Australian Government Department Or Entity Test 2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"persons\": {\n    \"personA\": {\n      \"australian_government_name\": {\n        \"2024-03-01\": \"Department of Agriculture, Fisheries and Forestry\"\n      },\n      \"australian_government_department_or_entity_eligible\": {\n        \"2024-03-01\": null\n      },\n      \"govcms_eligible\": {\n        \"2024-03-01\": null\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/calculate",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"calculate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "gunicorn"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 19 Sep 2024 06:02:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "246"
+						},
+						{
+							"key": "Country-Package",
+							"value": "openfisca-rules"
+						},
+						{
+							"key": "Country-Package-Version",
+							"value": "6.0.1"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"persons\": {\n        \"personA\": {\n            \"australian_government_department_or_entity_eligible\": {\n                \"2024-03-01\": \"eligible\"\n            },\n            \"australian_government_name\": {\n                \"2024-03-01\": \"Department of Agriculture, Fisheries and Forestry\"\n            },\n            \"govcms_eligible\": {\n                \"2024-03-01\": \"eligible\"\n            }\n        }\n    }\n}"
+				}
+			]
+		}
+	]
+}

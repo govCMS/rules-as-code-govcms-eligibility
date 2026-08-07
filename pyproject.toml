@@ -25,6 +25,8 @@ classifiers = [
 
 dependencies = [
     "openfisca-core[web-api]>=43",
+    "numpy<2.3",  # openfisca-core 44.x fails to import against numpy >= 2.3 (EnumArray metaclass conflict)
+    "pandas",
 ]
 
 [project.optional-dependencies]

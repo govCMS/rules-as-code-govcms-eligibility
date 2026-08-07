@@ -1,0 +1,73 @@
+# Test files describe situations and their expected outcomes
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/educational_institution.yaml`
+
+- name: Educational institution with no type is not eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+  output:
+    educational_institution_eligible: "not_eligible"
+    govcms_eligible: "not_eligible"
+
+- name: Educational institution receive government funding is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+    educational_institution_type: receive_government_funding
+  output:
+    educational_institution_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Educational institution government owned is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+    educational_institution_type: government_owned
+  output:
+    educational_institution_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Educational institution College owned by a public uni is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+    educational_institution_type: college_owned_by_a_public_uni
+  output:
+    educational_institution_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Educational institution established by legislation maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+    educational_institution_type: established_by_legislation
+  output:
+    educational_institution_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Educational institution Private educational institution is not eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+    educational_institution_type: private_educational_institution
+  output:
+    educational_institution_eligible: "not_eligible"
+    govcms_eligible: "not_eligible"
+
+- name: Educational institution other or none of the above is maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: educational_institution
+    educational_institution_type: other_or_none_of_the_above
+  output:
+    educational_institution_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Educational institution vector test covering all eligibility outcomes
+  period: 2024-03-01
+  input:
+    organisation_type: [none, educational_institution, educational_institution, educational_institution, educational_institution, educational_institution, educational_institution, educational_institution]
+    educational_institution_type: [none, none, receive_government_funding, government_owned, college_owned_by_a_public_uni, established_by_legislation, private_educational_institution, other_or_none_of_the_above]
+  output:
+    educational_institution_eligible: [not_eligible, not_eligible, eligible, eligible, eligible, maybe, not_eligible, maybe]
+    govcms_eligible: [not_eligible, not_eligible, eligible, eligible, eligible, maybe, not_eligible, maybe]

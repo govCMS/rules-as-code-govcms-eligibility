@@ -1,0 +1,64 @@
+# Test files describe situations and their expected outcomes
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/developer_and_dev_partner.yaml`
+
+- name: Developer and Dev partner with no type is not eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: developer_and_dev_partner
+  output:
+    developer_and_dev_partner_eligible: "not_eligible"
+    govcms_eligible: "not_eligible"
+
+- name: Developer and Dev partner Developers and Dev partners in a government agency is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: developer_and_dev_partner
+    developer_and_dev_partner_type: developers_and_dev_partners_in_a_government_agency
+  output:
+    developer_and_dev_partner_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Developer and Dev partner Developers and Dev partners on the DSP is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: developer_and_dev_partner
+    developer_and_dev_partner_type: developers_and_dev_partners_on_the_dsp
+  output:
+    developer_and_dev_partner_eligible: "eligible_with_conditions"
+    govcms_eligible: "eligible_with_conditions"
+
+- name: Developer and Dev partner Developers and Dev partners on the DSP is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: developer_and_dev_partner
+    developer_and_dev_partner_type: developers_and_dev_partners_not_on_the_dsp
+  output:
+    developer_and_dev_partner_eligible: "eligible_with_conditions"
+    govcms_eligible: "eligible_with_conditions"
+
+- name: Developer and Dev partner Developers and Dev partners who are freelancers is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: developer_and_dev_partner
+    developer_and_dev_partner_type: freelance_developers
+  output:
+    developer_and_dev_partner_eligible: "eligible_with_conditions"
+    govcms_eligible: "eligible_with_conditions"
+
+- name: Developer and Dev partner other or none of the above is maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: developer_and_dev_partner
+    developer_and_dev_partner_type: other_or_none_of_the_above
+  output:
+    developer_and_dev_partner_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Developer and Dev partner vector test covering all eligibility outcomes
+  period: 2024-03-01
+  input:
+    organisation_type: [none, developer_and_dev_partner, developer_and_dev_partner, developer_and_dev_partner, developer_and_dev_partner, developer_and_dev_partner, developer_and_dev_partner]
+    developer_and_dev_partner_type: [none, none, developers_and_dev_partners_in_a_government_agency, developers_and_dev_partners_on_the_dsp, developers_and_dev_partners_not_on_the_dsp, freelance_developers, other_or_none_of_the_above]
+  output:
+    developer_and_dev_partner_eligible: [not_eligible, not_eligible, eligible, eligible_with_conditions, eligible_with_conditions, eligible_with_conditions, maybe]
+    govcms_eligible: [not_eligible, not_eligible, eligible, eligible_with_conditions, eligible_with_conditions, eligible_with_conditions, maybe]

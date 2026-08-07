@@ -1,0 +1,64 @@
+# Test files describe situations and their expected outcomes
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/local_government_council_or_entity.yaml`
+
+- name: Local government council or entity with no type is not eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: local_government_council_or_entity
+  output:
+    local_government_council_or_entity_eligible: "not_eligible"
+    govcms_eligible: "not_eligible"
+
+- name: Local government council or entity State or Territory agency is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: local_government_council_or_entity
+    local_government_council_or_entity_type: state_or_territory_local_council
+  output:
+    local_government_council_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Local government council or entity NSW City Council is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: local_government_council_or_entity
+    local_government_council_or_entity_type: nsw_city_council
+  output:
+    local_government_council_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Local government council or entity state NT Regional Council is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: local_government_council_or_entity
+    local_government_council_or_entity_type: nt_regional_council
+  output:
+    local_government_council_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Local government council or entity based on legislation is maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: local_government_council_or_entity
+    local_government_council_or_entity_type: based_on_legislation
+  output:
+    local_government_council_or_entity_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Local government council or entity other or none of the above is maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: local_government_council_or_entity
+    local_government_council_or_entity_type: other_or_none_of_the_above
+  output:
+    local_government_council_or_entity_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Local government council or entity vector test covering all eligibility outcomes
+  period: 2024-03-01
+  input:
+    organisation_type: [none, local_government_council_or_entity, local_government_council_or_entity, local_government_council_or_entity, local_government_council_or_entity, local_government_council_or_entity, local_government_council_or_entity]
+    local_government_council_or_entity_type: [none, none, state_or_territory_local_council, nsw_city_council, nt_regional_council, based_on_legislation, other_or_none_of_the_above]
+  output:
+    local_government_council_or_entity_eligible: [not_eligible, not_eligible, eligible, eligible, eligible, maybe, maybe]
+    govcms_eligible: [not_eligible, not_eligible, eligible, eligible, eligible, maybe, maybe]

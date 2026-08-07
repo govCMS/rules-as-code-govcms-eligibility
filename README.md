@@ -1,28 +1,24 @@
 # OpenFisca GovCMS Eligibility
 
+The rules modelled here determine an organisation's eligibility for the
+GovCMS program.
 
-The country whose law is modelled here has a very simple tax and benefit
-system.
-
-- It has a flat rate tax whose rates increase every year.
-- On the first of December, 2015, it introduced a basic income for all its
-  citizens of age who have no income.
-- On the first of December, 2016, it removed the income condition, providing
-  all its adult citizens with a basic income.
+- Depending on its organisation type (Australian Government, state or
+  territory government, local government, educational institution, developer
+  and dev partner, or other), an organisation answers a follow-up question
+  about its situation.
+- The `govcms_eligible` variable combines these answers into an outcome:
+  eligible, eligible with conditions, not eligible, or might be eligible.
+- Australian Government bodies can also be matched by name against the
+  official list of government bodies.
 
 These elements are described in different folders. All the modelling happens
 within the `openfisca_govcms_eligibility` folder.
 
-- The rates are in the `parameters` folder.
+- The parameters are in the `parameters` folder.
 - The formulas are in the `variables` folder.
-- This country package comes also with *reforms* in the `reforms` folder. This
-  is optional: your country may exist without defining any reform.
-  - In this country, there is
-    [a reform project](./openfisca_govcms_eligibility/reforms/modify_social_security_taxation.py)
-    aiming to modify the social security taxation, deleting the first bracket,
-    raising the intermediary ones and adding a new bracket with a higher tax
-    rate of `40 %` for people earning more than `40000`. This reform project
-    would apply starting from `2017-01-01`.
+- The CSV reference data (list of Australian Government bodies) and its
+  helpers are in the `csv_data` folder.
 
 The files that are outside from the `openfisca_govcms_eligibility` folder are
 used to set up the development environment.
@@ -70,6 +66,8 @@ recent versions should work, but are not tested.
 
 All platforms that can execute Python are supported, which includes GNU/Linux,
 macOS and Microsoft Windows.
+
+The `make` commands used below (e.g. `make test`, `make serve-local`) additionally require [uv](https://docs.astral.sh/uv/).
 
 ### Setting-up a Virtual Environment with venv
 
@@ -279,6 +277,6 @@ You can test your new Web API by sending it example JSON data located in the
 
 ```sh
 curl -X POST -H "Content-Type: application/json" \
-  -d @./openfisca_govcms_eligibility/situation_examples/couple.json \
+  -d @./openfisca_govcms_eligibility/situation_examples/govcms.json \
   http://localhost:5000/calculate
 ```

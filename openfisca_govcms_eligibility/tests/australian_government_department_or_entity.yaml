@@ -1,0 +1,82 @@
+# Test files describe situations and their expected outcomes
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/australian_government_department_or_entity.yaml`
+
+- name: Australian Government Department/Entity with no type is not eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+  output:
+    australian_government_department_or_entity_eligible: "not_eligible"
+    govcms_eligible: "not_eligible"
+
+- name: Australian Government Department/Entity list on pgpa flipchart is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: listed_on_pgpa_flipchart
+  output:
+    australian_government_department_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Australian Government Department/Entity list on AGOR is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: listed_on_agor
+  output:
+    australian_government_department_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Australian Government Department/Entity report to Federal Minister is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: report_to_federal_minister
+  output:
+    australian_government_department_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Australian Government Department/Entity is a Commonwealth Board is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: commonwealth_board
+  output:
+    australian_government_department_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Australian Government Department/Entity receive Commonwealth funding is eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: receive_commonwealth_funding
+  output:
+    australian_government_department_or_entity_eligible: "eligible"
+    govcms_eligible: "eligible"
+
+- name: Australian Government Department/Entity based on legislation is maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: based_on_legislation
+  output:
+    australian_government_department_or_entity_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Australian Government Department/Entity based on legislation is maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_department_or_entity_type: other_or_none_of_the_above
+  output:
+    australian_government_department_or_entity_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Australian Government Department/Entity vector test covering all eligibility outcomes
+  period: 2024-03-01
+  input:
+    organisation_type: [none, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity]
+    australian_government_department_or_entity_type: [none, none, listed_on_pgpa_flipchart, listed_on_agor, report_to_federal_minister, commonwealth_board, receive_commonwealth_funding, based_on_legislation, other_or_none_of_the_above]
+  output:
+    australian_government_department_or_entity_eligible: [not_eligible, not_eligible, eligible, eligible, eligible, eligible, eligible, maybe, maybe]
+    govcms_eligible: [not_eligible, not_eligible, eligible, eligible, eligible, eligible, eligible, maybe, maybe]

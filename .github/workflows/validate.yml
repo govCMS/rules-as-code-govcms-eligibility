@@ -55,7 +55,7 @@ jobs:
         run: bash "${GITHUB_WORKSPACE}/.github/lint-files.sh" "*.py" "uv run ruff check --exit-zero"
 
       - name: Lint YAML tests
-        run: bash "${GITHUB_WORKSPACE}/.github/lint-files.sh" "openfisca_country_template/tests/*.yaml" "uv run yamllint"
+        run: bash "${GITHUB_WORKSPACE}/.github/lint-files.sh" "openfisca_govcms_eligibility/tests/*.yaml" "uv run yamllint"
 
   test-yaml:
     runs-on: ubuntu-22.04

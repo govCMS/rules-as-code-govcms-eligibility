@@ -1,0 +1,24 @@
+# Test files describe situations and their expected outcomes
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/other_organisation_or_entity.yaml`
+
+- name: Other entity or organisation with no type is not eligible for GovCMS
+  period: 2024-03-01
+  output:
+    other_organisation_or_entity_eligible: "not_eligible"
+    govcms_eligible: "not_eligible"
+
+- name: Other entity or organisation maybe eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: other_organisation_or_entity
+  output:
+    other_organisation_or_entity_eligible: "maybe"
+    govcms_eligible: "maybe"
+
+- name: Other entity or organisation vector test covering all eligibility outcomes
+  period: 2024-03-01
+  input:
+    organisation_type: [none, other_organisation_or_entity, other_organisation_or_entity, none]
+  output:
+    other_organisation_or_entity_eligible: [not_eligible, maybe, maybe, not_eligible]
+    govcms_eligible: [not_eligible, maybe, maybe, not_eligible]

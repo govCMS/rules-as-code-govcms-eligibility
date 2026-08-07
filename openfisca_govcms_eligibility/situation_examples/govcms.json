@@ -1,0 +1,15 @@
+{
+  "persons": {
+    "applicant": {
+      "organisation_type": {
+        "2024-03-01": "australian_government_department_or_entity"
+      },
+      "australian_government_department_or_entity_type": {
+        "2024-03-01": "listed_on_pgpa_flipchart"
+      },
+      "govcms_eligible": {
+        "2024-03-01": null
+      }
+    }
+  }
+}

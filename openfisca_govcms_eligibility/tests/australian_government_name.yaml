@@ -1,0 +1,56 @@
+# Test files describe situations and their expected outcomes
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/australian_government_name.yaml`
+#
+# Note: these tests use real entity names from the australian_government_name.csv source data.
+# If an entity is renamed or removed from the CSV, the relevant test will fail and should be
+# updated to reflect the current data.
+
+- name: Unknown government name is not eligible and returns no data
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_name: "Not A Real Agency"
+  output:
+    australian_government_name_eligible: false
+    portfolio: "no_results"
+    type_of_body: "no_results"
+    materiality: "no_results"
+
+- name: Known government name is eligible and returns portfolio data
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_name: "Australian Taxation Office"
+  output:
+    australian_government_name_eligible: true
+    portfolio: "Treasury"
+    materiality: "Material"
+
+- name: Another known government name returns correct portfolio data
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_name: "Australian Federal Police"
+  output:
+    australian_government_name_eligible: true
+    portfolio: "Home Affairs"
+    materiality: "Material"
+
+- name: Known government name makes entity eligible for GovCMS
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_name: "Australian Bureau of Statistics"
+  output:
+    australian_government_name_eligible: true
+    govcms_eligible: "eligible"
+
+- name: Vector test covering known and unknown government names
+  period: 2024-03-01
+  input:
+    organisation_type: [australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity]
+    australian_government_name: ["Australian Taxation Office", "Not A Real Agency", "Reserve Bank of Australia"]
+  output:
+    australian_government_name_eligible: [true, false, true]
+    portfolio: ["Treasury", "no_results", "Treasury"]
+    materiality: ["Material", "no_results", "Material"]
