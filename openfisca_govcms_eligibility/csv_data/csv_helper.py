@@ -32,7 +32,9 @@ def load_csv_file(file_path, header_column=None, column_map=None):
                         skip = i
                         break
                 else:
-                    log.error("Header column '%s' not found in %s", header_column, file_path)
+                    log.error(
+                        "Header column '%s' not found in %s", header_column, file_path
+                    )
                     return None
         df = pd.read_csv(file_path, skiprows=skip, encoding="utf-8-sig")
         if column_map:
@@ -44,7 +46,9 @@ def load_csv_file(file_path, header_column=None, column_map=None):
         return df
 
 
-def filter_csv_data(data_frame, people, period, result_key, result_is_array, filter_keys):  # noqa: PLR0913
+def filter_csv_data(
+    data_frame, people, period, result_key, result_is_array, filter_keys
+):
     """Filter the given DataFrame based on the provided filter criteria and return the specified column's values for each input combination.
 
     Args:
@@ -80,7 +84,11 @@ def filter_csv_data(data_frame, people, period, result_key, result_is_array, fil
 
         # Retrieve the specified column's value for the first match
         if not filtered_df.empty:
-            result_values = filtered_df[result_key].to_numpy() if result_is_array else filtered_df[result_key].to_numpy()[0]
+            result_values = (
+                filtered_df[result_key].to_numpy()
+                if result_is_array
+                else filtered_df[result_key].to_numpy()[0]
+            )
         # Handle case where no match is found
         elif result_is_array:
             result_values = ["no_results"]
