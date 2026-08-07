@@ -1,0 +1,17 @@
+{
+    "persons": {
+        "Alicia": {
+            "birth": {
+                "2017-01": null
+            }
+        }
+    },
+    "households": {
+        "_": {
+            "adults": ["Alicia"],
+            "disposable_income": {
+                "2017-01": null
+            }
+        }
+    }
+}

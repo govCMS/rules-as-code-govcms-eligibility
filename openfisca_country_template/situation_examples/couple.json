@@ -1,0 +1,34 @@
+{
+    "persons": {
+        "Alicia": {
+            "birth": {
+                "ETERNITY": "1980-01-01"
+            },
+            "salary": {
+                "2017-01": 4000
+            }
+        },
+        "Javier": {
+            "birth": {
+                "ETERNITY": "1984-01-01"
+            },
+            "salary": {
+                "2017-01": 2500
+            }
+        }
+    },
+    "households": {
+        "_": {
+            "adults": ["Alicia", "Javier"],
+            "disposable_income": {
+                "2017-01": null
+            },
+            "total_benefits": {
+                "2017-01": null
+            },
+            "total_taxes": {
+                "2017-01": null
+            }
+        }
+    }
+}
