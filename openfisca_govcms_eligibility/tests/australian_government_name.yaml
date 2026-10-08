@@ -1,5 +1,5 @@
 # Test files describe situations and their expected outcomes
-# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/australian_government_name.yaml`
+# We can run this test on our command line using `openfisca test openfisca_govcms_eligibility/tests/australian_government_name.yaml`
 #
 # Note: these tests use real entity names from the australian_government_name.csv source data.
 # If an entity is renamed or removed from the CSV, the relevant test will fail and should be
@@ -54,3 +54,42 @@
     australian_government_name_eligible: [true, false, true]
     portfolio: ["Treasury", "no_results", "Treasury"]
     materiality: ["Material", "no_results", "Material"]
+
+- name: Names containing an apostrophe are eligible
+  period: 2024-03-01
+  input:
+    organisation_type: [australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity, australian_government_department_or_entity]
+    australian_government_name: ["Attorney-General's Department", "Department of Veterans' Affairs", "Defence and Veterans' Service Commission", "Royal Australian Air Force Veterans' Residences Trust Fund"]
+  output:
+    australian_government_name_eligible: [true, true, true, true]
+    govcms_eligible: [eligible, eligible, eligible, eligible]
+
+# The name lookup is an exact string match with no normalisation.
+
+- name: Typographic and HTML-encoded apostrophes are not matched
+  period: 2024-03-01
+  input:
+    organisation_type: [australian_government_department_or_entity, australian_government_department_or_entity]
+    australian_government_name: ["Attorney-General’s Department", "Attorney-General&#039;s Department"]
+  output:
+    australian_government_name_eligible: [false, false]
+    govcms_eligible: [not_eligible, not_eligible]
+
+- name: Trailing whitespace or altered case is not matched
+  period: 2024-03-01
+  input:
+    organisation_type: [australian_government_department_or_entity, australian_government_department_or_entity]
+    australian_government_name: ["Attorney-General's Department ", "attorney-general's department"]
+  output:
+    australian_government_name_eligible: [false, false]
+    govcms_eligible: [not_eligible, not_eligible]
+
+- name: An unmatched name still resolves via the follow-up question
+  period: 2024-03-01
+  input:
+    organisation_type: australian_government_department_or_entity
+    australian_government_name: "Attorney-General’s Department"
+    australian_government_department_or_entity_type: listed_on_pgpa_flipchart
+  output:
+    australian_government_name_eligible: false
+    govcms_eligible: "eligible"

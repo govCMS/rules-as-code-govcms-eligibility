@@ -10,7 +10,6 @@ from pathlib import Path
 
 from openfisca_core.model_api import DAY, Enum, Variable, not_, select, where
 
-# Import the Entities specifically defined for this tax and benefit system
 from openfisca_govcms_eligibility.csv_data.csv_helper import (
     filter_csv_data,
     load_csv_file,
@@ -20,7 +19,7 @@ from openfisca_govcms_eligibility.entities import Person
 
 # Load the CSV files into DataFrames
 csv_directory = Path(__file__).resolve().parent.parent / "csv_data" / "govcms"
-# Treatment IDs
+# Australian government names
 australian_government_name_path = (
     csv_directory / "australian_government_name.csv"
 ).resolve()
@@ -90,7 +89,7 @@ class australian_government_name(Variable):
     entity = Person
     label = "Australian government name"
     definition_period = DAY
-    documentation = "This variable represents the name of the Australian government."
+    documentation = "Name of the Australian Government body or entity."
 
 
 class australian_government_department_or_entity_type(Variable):
@@ -253,7 +252,7 @@ class govcms_eligible(Variable):
                         == GovCMSEligibleTypes.eligible
                     )
                 ),
-                # If any of the following are true with conditions, then the person is eligible for GovCMS
+                # Only developers and dev partners can be eligible with conditions
                 developer_and_dev_partner_eligible
                 == GovCMSEligibleTypes.eligible_with_conditions,
                 # If any of the following are maybe, then the person is maybe eligible for GovCMS
@@ -322,7 +321,7 @@ class australian_government_department_or_entity_eligible(Variable):
     default_value = GovCMSEligibleTypes.not_eligible
     entity = Person
     definition_period = DAY
-    label = "Eligibility for Australian Government Department or Entity."
+    label = "Eligibility for Australian Government department or entity."
 
     def formula(person, period):
         """Calculate the eligibility of a person's Australian government department or entity for GovCMS."""
@@ -379,10 +378,10 @@ class state_territory_government_department_or_entity_eligible(Variable):
     default_value = GovCMSEligibleTypes.not_eligible
     entity = Person
     definition_period = DAY
-    label = "Eligibility for state territory government department or entity."
+    label = "Eligibility for state or territory government department or entity."
 
     def formula(person, period):
-        """Calculate the formula for the GovCMS eligibility variable."""
+        """Calculate the eligibility of a state or territory government department or entity for GovCMS."""
         organisation_type_condition = (
             person("organisation_type", period)
             == OrganisationTypes.state_territory_government_department_or_entity
@@ -434,10 +433,10 @@ class local_government_council_or_entity_eligible(Variable):
     default_value = GovCMSEligibleTypes.not_eligible
     entity = Person
     definition_period = DAY
-    label = "Eligibility for Local government council or entity."
+    label = "Eligibility for local government council or entity."
 
     def formula(person, period):
-        """Calculate the formula for the GovCMS eligibility variable."""
+        """Calculate the eligibility of a local government council or entity for GovCMS."""
         organisation_type_condition = (
             person("organisation_type", period)
             == OrganisationTypes.local_government_council_or_entity
@@ -480,10 +479,10 @@ class educational_institution_eligible(Variable):
     default_value = GovCMSEligibleTypes.not_eligible
     entity = Person
     definition_period = DAY
-    label = "Eligibility for Educational institution."
+    label = "Eligibility for educational institution."
 
     def formula(person, period):
-        """Calculate the formula for the GovCMS eligibility variable."""
+        """Calculate the eligibility of an educational institution for GovCMS."""
         organisation_type_condition = (
             person("organisation_type", period)
             == OrganisationTypes.educational_institution
@@ -525,10 +524,10 @@ class developer_and_dev_partner_eligible(Variable):
     default_value = GovCMSEligibleTypes.not_eligible
     entity = Person
     definition_period = DAY
-    label = "Eligibility for Educational institution."
+    label = "Eligibility for developers and development partners."
 
     def formula(person, period):
-        """Calculate the formula for the GovCMS eligibility variable."""
+        """Calculate the eligibility of a developer or development partner for GovCMS."""
         organisation_type_condition = (
             person("organisation_type", period)
             == OrganisationTypes.developer_and_dev_partner
@@ -578,7 +577,7 @@ class other_organisation_or_entity_eligible(Variable):
     default_value = GovCMSEligibleTypes.not_eligible
     entity = Person
     definition_period = DAY
-    label = "Eligibility for Educational institution."
+    label = "Eligibility for other organisations or entities."
 
     def formula(person, period):
         """Calculate the formula for the eligibility of other organisations or entities for GovCMS."""
@@ -591,7 +590,7 @@ class other_organisation_or_entity_eligible(Variable):
 
 
 class australian_government_name_eligible(Variable):
-    label = "australian_government_name_eligible"
+    label = "Australian government name is on the list of PGPA Act Commonwealth entities and companies."
     entity = Person
     definition_period = DAY
     value_type = bool
