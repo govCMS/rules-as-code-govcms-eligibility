@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.0.1
+
+* Minor change.
+* Details:
+  - Use `os.path` imports in `situation_examples`.
+
 # 1.0.0
 
 * Technical improvement.
