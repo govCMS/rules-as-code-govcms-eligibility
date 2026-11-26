@@ -13,50 +13,15 @@ GovCMS program.
   official list of government bodies.
 
 These elements are described in different folders. All the modelling happens
-within the `openfisca_govcms_eligibility` folder.
+within the `openfisca_rules` folder.
 
 - The parameters are in the `parameters` folder.
 - The formulas are in the `variables` folder.
 - The CSV reference data (list of Australian Government bodies) and its
   helpers are in the `csv_data` folder.
 
-The files that are outside from the `openfisca_govcms_eligibility` folder are
+The files that are outside from the `openfisca_rules` folder are
 used to set up the development environment.
-
-## Packaging your Country Package for Distribution
-
-Country packages are Python distributions. You can choose to distribute your
-package automatically via the predefined continuous deployment system on GitHub
-Actions, or manually.
-
-### Automatic continuous deployment on GitHub
-
-This repository is configured with a continuous deployment system to automate
-the distribution of your package via `pip`.
-
-#### Setting up continuous deployment
-
-To activate the continuous deployment:
-
-1. Create an account on [PyPI](https://pypi.org/) if you don't already have
-   one.
-2. Generate a token in your PyPI account. This token will allow GitHub Actions
-   to securely upload new versions of your package to PyPI.
-3. Add this token to your GitHub repository's secrets under the name
-   `PYPI_TOKEN`.
-
-Once set up, changes to the `main` branch will trigger an automated workflow to
-build and publish your package to PyPI, making it available for `pip`
-installation.
-
-### Manual distribution
-
-If you prefer to manually manage the release and distribution of your package,
-follow the guidelines provided by the
-[Python Packaging Authority](https://python-packaging-user-guide.readthedocs.io/tutorials/distributing-packages/#packaging-your-project).
-
-This involves detailed steps on preparing your package, creating distribution
-files, and uploading them to PyPI.
 
 ## Install Instructions for Users and Contributors
 
@@ -92,61 +57,7 @@ You can deactivate that venv at any time with `deactivate`.
 
 :tada: You are now ready to install this OpenFisca Country Package!
 
-Two install procedures are available. Pick procedure A or B below depending on
-how you plan to use this Country Package.
-
-### A. Minimal Installation (Pip Install)
-
-Follow this installation if you wish to:
-
-- run calculations on a large population;
-- create tax & benefits simulations;
-- write an extension to this legislation (e.g. city specific tax & benefits);
-- serve your Country Package with the OpenFisca Web API.
-
-For more advanced uses, head to the
-[Advanced Installation](#advanced-installation-git-clone).
-
-#### Install this Country Package with Pip Install
-
-Inside your venv, check the prerequisites:
-
-```sh
-python --version  # should print "Python 3.11.xx".
-```
-
-```sh
-pip --version  # should print at least 9.0.
-# if not, run "pip install --upgrade pip"
-```
-
-Install the Country Package:
-
-```sh
-pip install openfisca-govcms_eligibility
-```
-
-:warning: Please beware that installing the Country Package with `pip` is
-dependent on its maintainers publishing said package.
-
-:tada: This OpenFisca Country Package is now installed and ready!
-
-#### Next Steps
-
-- To learn how to use OpenFisca, follow our
-  [tutorials](https://openfisca.org/doc/).
-- To serve this Country Package, serve the
-  [OpenFisca Web API](#serve-your-country-package-with-the-openFisca-web-api).
-
-Depending on what you want to do with OpenFisca, you may want to install yet
-other packages in your venv:
-
-- To install extensions or write on top of this Country Package, head to the
-  [Extensions documentation](https://openfisca.org/doc/contribute/extensions.html).
-- To plot simulation results, try [matplotlib](http://matplotlib.org/).
-- To manage data, check out [pandas](http://pandas.pydata.org/).
-
-### B. Advanced Installation (Git Clone)
+### A. Installation (Git Clone)
 
 Follow this tutorial if you wish to:
 
@@ -190,14 +101,14 @@ You can make sure that everything is working by running the provided tests with
 - To contribute to the code, read our
   [Contribution Guidebook](https://openfisca.org/doc/contribute/index.html).
 
-### C. Contributing
+### B. Contributing
 
 Follow this tutorial if you wish to:
 
 - contribute to the source code.
 
 _Note: This tutorial assumes you have already followed the instructions laid
-out in section [B. Advanced Installation](#b-advanced-installation-git-clone)._
+out in section [A. Installation](#a-installation-git-clone)._
 
 In order to ensure all published versions of this template work as expected,
 new contributions are tested in an isolated manner on Github Actions.
@@ -247,7 +158,7 @@ OpenFisca Web API with your Country Package.
 To serve the Openfisca Web API locally, run:
 
 ```sh
-openfisca serve --port 5000 --country-package openfisca_govcms_eligibility
+openfisca serve --port 5000 --country-package openfisca_rules
 ```
 
 Or use the quick-start Make command:
@@ -277,6 +188,6 @@ You can test your new Web API by sending it example JSON data located in the
 
 ```sh
 curl -X POST -H "Content-Type: application/json" \
-  -d @./openfisca_govcms_eligibility/situation_examples/govcms.json \
+  -d @./openfisca_rules/situation_examples/govcms.json \
   http://localhost:5000/calculate
 ```

@@ -51,14 +51,14 @@ test: clean
 	@# Remove stale or duplicate .dist-info so only one version's metadata is visible (avoids AttributeError on get("Name").lower()).
 	@rm -rf .venv/lib/python*/site-packages/openfisca_govcms_eligibility-*.dist-info 2>/dev/null || true
 	uv sync --group dev
-	@# Path must be openfisca_govcms_eligibility/tests only (not the whole package), so parameter YAMLs are not collected as tests.
-	uv run openfisca test --country-package openfisca_govcms_eligibility openfisca_govcms_eligibility/tests
+	@# Path must be openfisca_rules/tests only (not the whole package), so parameter YAMLs are not collected as tests.
+	uv run openfisca test --country-package openfisca_rules openfisca_rules/tests
 
 # Run the same checks as the CI (validate workflow), without the version/changelog check.
 ci: check-syntax-errors check-style
 	@bash .github/lint-files.sh "*.py" "uv run ruff check --exit-zero"
-	@bash .github/lint-files.sh "openfisca_govcms_eligibility/tests/*.yaml" "uv run yamllint"
+	@bash .github/lint-files.sh "openfisca_rules/tests/*.yaml" "uv run yamllint"
 	$(MAKE) test
 
 serve-local: build
-	uv run openfisca serve --country-package openfisca_govcms_eligibility
+	uv run openfisca serve --country-package openfisca_rules

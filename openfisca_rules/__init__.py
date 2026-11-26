@@ -10,14 +10,14 @@ and legislation parameters (data).
 See https://openfisca.org/doc/key-concepts/tax_and_benefit_system.html
 """
 
-import os
+from os.path import abspath, dirname, join
 
 from openfisca_core.taxbenefitsystems import TaxBenefitSystem
 
-from openfisca_govcms_eligibility import entities
-from openfisca_govcms_eligibility.situation_examples import govcms
+from openfisca_rules import entities
+from openfisca_rules.situation_examples import govcms
 
-COUNTRY_DIR = os.path.dirname(os.path.abspath(__file__))
+COUNTRY_DIR = dirname(abspath(__file__))
 
 
 # Our country tax and benefit class inherits from the general TaxBenefitSystem
@@ -31,11 +31,11 @@ class CountryTaxBenefitSystem(TaxBenefitSystem):
         super().__init__(entities.entities)
 
         # We add to our tax and benefit system all the variables
-        self.add_variables_from_directory(os.path.join(COUNTRY_DIR, "variables"))
+        self.add_variables_from_directory(join(COUNTRY_DIR, "variables"))
 
         # We add to our tax and benefit system all the legislation parameters
         # defined in the  parameters files
-        param_path = os.path.join(COUNTRY_DIR, "parameters")
+        param_path = join(COUNTRY_DIR, "parameters")
         self.load_parameters(param_path)
 
         # We define which variable, parameter and simulation example will be

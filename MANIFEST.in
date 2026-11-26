@@ -1,1 +1,1 @@
-recursive-include openfisca_govcms_eligibility *
+recursive-include openfisca_rules *

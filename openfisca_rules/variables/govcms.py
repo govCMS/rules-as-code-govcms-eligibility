@@ -10,19 +10,17 @@ from pathlib import Path
 
 from openfisca_core.model_api import DAY, Enum, Variable, not_, select, where
 
-from openfisca_govcms_eligibility.csv_data.csv_helper import (
+from openfisca_rules.csv_data.csv_helper import (
     filter_csv_data,
     load_csv_file,
     value_exists_in_csv,
 )
-from openfisca_govcms_eligibility.entities import Person
+from openfisca_rules.entities import Person
 
 # Load the CSV files into DataFrames
 csv_directory = Path(__file__).resolve().parent.parent / "csv_data" / "govcms"
 # Australian government names
-australian_government_name_path = (
-    csv_directory / "australian_government_name.csv"
-).resolve()
+australian_government_name_path = (csv_directory / "australian_government_name.csv").resolve()
 australian_government_name_df = load_csv_file(
     australian_government_name_path,
     header_column="Title",
@@ -47,12 +45,8 @@ class GovCMSEligibleTypes(Enum):
 class OrganisationTypes(Enum):
     """Enumeration of different types of organisations."""
 
-    australian_government_department_or_entity = (
-        "Australian Government department or entity"
-    )
-    state_territory_government_department_or_entity = (
-        "State Territory Government department or entity"
-    )
+    australian_government_department_or_entity = "Australian Government department or entity"
+    state_territory_government_department_or_entity = "State Territory Government department or entity"
     local_government_council_or_entity = "Local government council or entity"
     educational_institution = "Educational institution"
     developer_and_dev_partner = "Developer and Dev partner"
@@ -109,9 +103,7 @@ class StateTerritoryGovernmentDepartmentOrEntityTypes(Enum):
     state_or_territory_agency = "State or territory agency"
     report_to_state_or_territory_minister = "Report to state or territory minister"
     state_or_territory_board = "State or territory board"
-    receive_funding_from_their_state_or_territory = (
-        "Receive funding from their state or territory"
-    )
+    receive_funding_from_their_state_or_territory = "Receive funding from their state or territory"
     based_on_legislation = "Based on legislation"
     other_or_none_of_the_above = "Other or none of the above"
     none = "None"
@@ -176,13 +168,9 @@ class educational_institution_type(Variable):
 class DeveloperAndDevPartnerTypes(Enum):
     """Enumeration of different types of Developer and Dev partner Types."""
 
-    developers_and_dev_partners_in_a_government_agency = (
-        "Developers and dev partners in a government agency"
-    )
+    developers_and_dev_partners_in_a_government_agency = "Developers and dev partners in a government agency"
     developers_and_dev_partners_on_the_dsp = "Developers and dev partners on the DSP"
-    developers_and_dev_partners_not_on_the_dsp = (
-        "Developers and dev partners not on the DSP"
-    )
+    developers_and_dev_partners_not_on_the_dsp = "Developers and dev partners not on the DSP"
     freelance_developers = "Freelance developers"
     other_or_none_of_the_above = "Other or none of the above"
     none = "None"
@@ -211,105 +199,45 @@ class govcms_eligible(Variable):
 
     def formula(person, period):
         """Calculate the formula for the GovCMS program eligibility."""
-        australian_government_department_or_entity_eligible = person(
-            "australian_government_department_or_entity_eligible", period
-        )
-        state_territory_government_department_or_entity_eligible = person(
-            "state_territory_government_department_or_entity_eligible", period
-        )
-        local_government_council_or_entity_eligible = person(
-            "local_government_council_or_entity_eligible", period
-        )
-        educational_institution_eligible = person(
-            "educational_institution_eligible", period
-        )
-        developer_and_dev_partner_eligible = person(
-            "developer_and_dev_partner_eligible", period
-        )
-        other_organisation_or_entity_eligible = person(
-            "other_organisation_or_entity_eligible", period
-        )
+        australian_government_department_or_entity_eligible = person("australian_government_department_or_entity_eligible", period)
+        state_territory_government_department_or_entity_eligible = person("state_territory_government_department_or_entity_eligible", period)
+        local_government_council_or_entity_eligible = person("local_government_council_or_entity_eligible", period)
+        educational_institution_eligible = person("educational_institution_eligible", period)
+        developer_and_dev_partner_eligible = person("developer_and_dev_partner_eligible", period)
+        other_organisation_or_entity_eligible = person("other_organisation_or_entity_eligible", period)
 
         return select(
             [
                 # If any of the following are true, then the person is eligible for GovCMS
                 (
-                    (
-                        australian_government_department_or_entity_eligible
-                        == GovCMSEligibleTypes.eligible
-                    )
-                    + (
-                        state_territory_government_department_or_entity_eligible
-                        == GovCMSEligibleTypes.eligible
-                    )
-                    + (
-                        local_government_council_or_entity_eligible
-                        == GovCMSEligibleTypes.eligible
-                    )
+                    (australian_government_department_or_entity_eligible == GovCMSEligibleTypes.eligible)
+                    + (state_territory_government_department_or_entity_eligible == GovCMSEligibleTypes.eligible)
+                    + (local_government_council_or_entity_eligible == GovCMSEligibleTypes.eligible)
                     + (educational_institution_eligible == GovCMSEligibleTypes.eligible)
-                    + (
-                        developer_and_dev_partner_eligible
-                        == GovCMSEligibleTypes.eligible
-                    )
+                    + (developer_and_dev_partner_eligible == GovCMSEligibleTypes.eligible)
                 ),
                 # Only developers and dev partners can be eligible with conditions
-                developer_and_dev_partner_eligible
-                == GovCMSEligibleTypes.eligible_with_conditions,
+                developer_and_dev_partner_eligible == GovCMSEligibleTypes.eligible_with_conditions,
                 # If any of the following are maybe, then the person is maybe eligible for GovCMS
                 (
-                    (
-                        australian_government_department_or_entity_eligible
-                        == GovCMSEligibleTypes.maybe
-                    )
-                    + (
-                        state_territory_government_department_or_entity_eligible
-                        == GovCMSEligibleTypes.maybe
-                    )
-                    + (
-                        local_government_council_or_entity_eligible
-                        == GovCMSEligibleTypes.maybe
-                    )
+                    (australian_government_department_or_entity_eligible == GovCMSEligibleTypes.maybe)
+                    + (state_territory_government_department_or_entity_eligible == GovCMSEligibleTypes.maybe)
+                    + (local_government_council_or_entity_eligible == GovCMSEligibleTypes.maybe)
                     + (educational_institution_eligible == GovCMSEligibleTypes.maybe)
                     + (developer_and_dev_partner_eligible == GovCMSEligibleTypes.maybe)
-                    + (
-                        other_organisation_or_entity_eligible
-                        == GovCMSEligibleTypes.maybe
-                    )
+                    + (other_organisation_or_entity_eligible == GovCMSEligibleTypes.maybe)
                 ),
                 # If all of the following are false, then the person is not eligible for GovCMS
                 (
-                    (
-                        australian_government_department_or_entity_eligible
-                        == GovCMSEligibleTypes.not_eligible
-                    )
-                    * (
-                        state_territory_government_department_or_entity_eligible
-                        == GovCMSEligibleTypes.not_eligible
-                    )
-                    * (
-                        local_government_council_or_entity_eligible
-                        == GovCMSEligibleTypes.not_eligible
-                    )
-                    * (
-                        educational_institution_eligible
-                        == GovCMSEligibleTypes.not_eligible
-                    )
-                    * (
-                        developer_and_dev_partner_eligible
-                        == GovCMSEligibleTypes.not_eligible
-                    )
-                    * (
-                        other_organisation_or_entity_eligible
-                        == GovCMSEligibleTypes.not_eligible
-                    )
+                    (australian_government_department_or_entity_eligible == GovCMSEligibleTypes.not_eligible)
+                    * (state_territory_government_department_or_entity_eligible == GovCMSEligibleTypes.not_eligible)
+                    * (local_government_council_or_entity_eligible == GovCMSEligibleTypes.not_eligible)
+                    * (educational_institution_eligible == GovCMSEligibleTypes.not_eligible)
+                    * (developer_and_dev_partner_eligible == GovCMSEligibleTypes.not_eligible)
+                    * (other_organisation_or_entity_eligible == GovCMSEligibleTypes.not_eligible)
                 ),
             ],
-            [
-                GovCMSEligibleTypes.eligible,
-                GovCMSEligibleTypes.eligible_with_conditions,
-                GovCMSEligibleTypes.maybe,
-                GovCMSEligibleTypes.not_eligible,
-            ],
+            [GovCMSEligibleTypes.eligible, GovCMSEligibleTypes.eligible_with_conditions, GovCMSEligibleTypes.maybe, GovCMSEligibleTypes.not_eligible],
         )
 
 
@@ -325,36 +253,21 @@ class australian_government_department_or_entity_eligible(Variable):
 
     def formula(person, period):
         """Calculate the eligibility of a person's Australian government department or entity for GovCMS."""
-        australian_government_name_eligible = person(
-            "australian_government_name_eligible", period
-        )
-        organisation_type_condition = (
-            person("organisation_type", period)
-            == OrganisationTypes.australian_government_department_or_entity
-        )
-        agd_entity_type = person(
-            "australian_government_department_or_entity_type", period
-        )
+        australian_government_name_eligible = person("australian_government_name_eligible", period)
+        organisation_type_condition = person("organisation_type", period) == OrganisationTypes.australian_government_department_or_entity
+        agd_entity_type = person("australian_government_department_or_entity_type", period)
         agd_entity_types = AustralianGovernmentDepartmentOrEntityTypes
         return select(
             [
                 australian_government_name_eligible,
-                not_(organisation_type_condition)
-                + (agd_entity_type == agd_entity_types.none),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.listed_on_pgpa_flipchart),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.listed_on_agor),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.report_to_federal_minister),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.commonwealth_board),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.receive_commonwealth_funding),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.based_on_legislation),
-                organisation_type_condition
-                * (agd_entity_type == agd_entity_types.other_or_none_of_the_above),
+                not_(organisation_type_condition) + (agd_entity_type == agd_entity_types.none),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.listed_on_pgpa_flipchart),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.listed_on_agor),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.report_to_federal_minister),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.commonwealth_board),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.receive_commonwealth_funding),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.based_on_legislation),
+                organisation_type_condition * (agd_entity_type == agd_entity_types.other_or_none_of_the_above),
             ],
             [
                 GovCMSEligibleTypes.eligible,
@@ -382,36 +295,18 @@ class state_territory_government_department_or_entity_eligible(Variable):
 
     def formula(person, period):
         """Calculate the eligibility of a state or territory government department or entity for GovCMS."""
-        organisation_type_condition = (
-            person("organisation_type", period)
-            == OrganisationTypes.state_territory_government_department_or_entity
-        )
-        stgd_entity_type = person(
-            "state_territory_government_department_or_entity_type", period
-        )
+        organisation_type_condition = person("organisation_type", period) == OrganisationTypes.state_territory_government_department_or_entity
+        stgd_entity_type = person("state_territory_government_department_or_entity_type", period)
         stgd_entity_types = StateTerritoryGovernmentDepartmentOrEntityTypes
         return select(
             [
-                not_(organisation_type_condition)
-                + (stgd_entity_type == stgd_entity_types.none),
-                organisation_type_condition
-                * (stgd_entity_type == stgd_entity_types.state_or_territory_agency),
-                organisation_type_condition
-                * (
-                    stgd_entity_type
-                    == stgd_entity_types.report_to_state_or_territory_minister
-                ),
-                organisation_type_condition
-                * (stgd_entity_type == stgd_entity_types.state_or_territory_board),
-                organisation_type_condition
-                * (
-                    stgd_entity_type
-                    == stgd_entity_types.receive_funding_from_their_state_or_territory
-                ),
-                organisation_type_condition
-                * (stgd_entity_type == stgd_entity_types.based_on_legislation),
-                organisation_type_condition
-                * (stgd_entity_type == stgd_entity_types.other_or_none_of_the_above),
+                not_(organisation_type_condition) + (stgd_entity_type == stgd_entity_types.none),
+                organisation_type_condition * (stgd_entity_type == stgd_entity_types.state_or_territory_agency),
+                organisation_type_condition * (stgd_entity_type == stgd_entity_types.report_to_state_or_territory_minister),
+                organisation_type_condition * (stgd_entity_type == stgd_entity_types.state_or_territory_board),
+                organisation_type_condition * (stgd_entity_type == stgd_entity_types.receive_funding_from_their_state_or_territory),
+                organisation_type_condition * (stgd_entity_type == stgd_entity_types.based_on_legislation),
+                organisation_type_condition * (stgd_entity_type == stgd_entity_types.other_or_none_of_the_above),
             ],
             [
                 GovCMSEligibleTypes.not_eligible,
@@ -437,28 +332,17 @@ class local_government_council_or_entity_eligible(Variable):
 
     def formula(person, period):
         """Calculate the eligibility of a local government council or entity for GovCMS."""
-        organisation_type_condition = (
-            person("organisation_type", period)
-            == OrganisationTypes.local_government_council_or_entity
-        )
+        organisation_type_condition = person("organisation_type", period) == OrganisationTypes.local_government_council_or_entity
         lgc_entity_type = person("local_government_council_or_entity_type", period)
         lgc_entity_types = LocalGovernmentCouncilOrEntityTypes
         return select(
             [
-                not_(organisation_type_condition)
-                + (lgc_entity_type == lgc_entity_types.none),
-                organisation_type_condition
-                * (
-                    lgc_entity_type == lgc_entity_types.state_or_territory_local_council
-                ),
-                organisation_type_condition
-                * (lgc_entity_type == lgc_entity_types.nsw_city_council),
-                organisation_type_condition
-                * (lgc_entity_type == lgc_entity_types.nt_regional_council),
-                organisation_type_condition
-                * (lgc_entity_type == lgc_entity_types.based_on_legislation),
-                organisation_type_condition
-                * (lgc_entity_type == lgc_entity_types.other_or_none_of_the_above),
+                not_(organisation_type_condition) + (lgc_entity_type == lgc_entity_types.none),
+                organisation_type_condition * (lgc_entity_type == lgc_entity_types.state_or_territory_local_council),
+                organisation_type_condition * (lgc_entity_type == lgc_entity_types.nsw_city_council),
+                organisation_type_condition * (lgc_entity_type == lgc_entity_types.nt_regional_council),
+                organisation_type_condition * (lgc_entity_type == lgc_entity_types.based_on_legislation),
+                organisation_type_condition * (lgc_entity_type == lgc_entity_types.other_or_none_of_the_above),
             ],
             [
                 GovCMSEligibleTypes.not_eligible,
@@ -483,26 +367,18 @@ class educational_institution_eligible(Variable):
 
     def formula(person, period):
         """Calculate the eligibility of an educational institution for GovCMS."""
-        organisation_type_condition = (
-            person("organisation_type", period)
-            == OrganisationTypes.educational_institution
-        )
+        organisation_type_condition = person("organisation_type", period) == OrganisationTypes.educational_institution
         ei_type = person("educational_institution_type", period)
         ei_types = EducationalInstitutionTypes
         return select(
             [
                 not_(organisation_type_condition) + (ei_type == ei_types.none),
-                organisation_type_condition
-                * (ei_type == ei_types.receive_government_funding),
+                organisation_type_condition * (ei_type == ei_types.receive_government_funding),
                 organisation_type_condition * (ei_type == ei_types.government_owned),
-                organisation_type_condition
-                * (ei_type == ei_types.college_owned_by_a_public_uni),
-                organisation_type_condition
-                * (ei_type == ei_types.established_by_legislation),
-                organisation_type_condition
-                * (ei_type == ei_types.private_educational_institution),
-                organisation_type_condition
-                * (ei_type == ei_types.other_or_none_of_the_above),
+                organisation_type_condition * (ei_type == ei_types.college_owned_by_a_public_uni),
+                organisation_type_condition * (ei_type == ei_types.established_by_legislation),
+                organisation_type_condition * (ei_type == ei_types.private_educational_institution),
+                organisation_type_condition * (ei_type == ei_types.other_or_none_of_the_above),
             ],
             [
                 GovCMSEligibleTypes.not_eligible,
@@ -528,35 +404,17 @@ class developer_and_dev_partner_eligible(Variable):
 
     def formula(person, period):
         """Calculate the eligibility of a developer or development partner for GovCMS."""
-        organisation_type_condition = (
-            person("organisation_type", period)
-            == OrganisationTypes.developer_and_dev_partner
-        )
+        organisation_type_condition = person("organisation_type", period) == OrganisationTypes.developer_and_dev_partner
         dev_partner_type = person("developer_and_dev_partner_type", period)
         dev_partner_types = DeveloperAndDevPartnerTypes
         return select(
             [
-                not_(organisation_type_condition)
-                + (dev_partner_type == dev_partner_types.none),
-                organisation_type_condition
-                * (
-                    dev_partner_type
-                    == dev_partner_types.developers_and_dev_partners_in_a_government_agency
-                ),
-                organisation_type_condition
-                * (
-                    dev_partner_type
-                    == dev_partner_types.developers_and_dev_partners_on_the_dsp
-                ),
-                organisation_type_condition
-                * (
-                    dev_partner_type
-                    == dev_partner_types.developers_and_dev_partners_not_on_the_dsp
-                ),
-                organisation_type_condition
-                * (dev_partner_type == dev_partner_types.freelance_developers),
-                organisation_type_condition
-                * (dev_partner_type == dev_partner_types.other_or_none_of_the_above),
+                not_(organisation_type_condition) + (dev_partner_type == dev_partner_types.none),
+                organisation_type_condition * (dev_partner_type == dev_partner_types.developers_and_dev_partners_in_a_government_agency),
+                organisation_type_condition * (dev_partner_type == dev_partner_types.developers_and_dev_partners_on_the_dsp),
+                organisation_type_condition * (dev_partner_type == dev_partner_types.developers_and_dev_partners_not_on_the_dsp),
+                organisation_type_condition * (dev_partner_type == dev_partner_types.freelance_developers),
+                organisation_type_condition * (dev_partner_type == dev_partner_types.other_or_none_of_the_above),
             ],
             [
                 GovCMSEligibleTypes.not_eligible,
@@ -582,8 +440,7 @@ class other_organisation_or_entity_eligible(Variable):
     def formula(person, period):
         """Calculate the formula for the eligibility of other organisations or entities for GovCMS."""
         return where(
-            person("organisation_type", period)
-            == OrganisationTypes.other_organisation_or_entity,
+            person("organisation_type", period) == OrganisationTypes.other_organisation_or_entity,
             GovCMSEligibleTypes.maybe,
             GovCMSEligibleTypes.not_eligible,
         )

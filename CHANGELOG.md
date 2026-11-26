@@ -1,5 +1,19 @@
 # Changelog
 
+# 1.0.0
+
+* Technical improvement.
+* Impacted periods: all.
+* Impacted areas: all.
+* Details:
+  - Rename the Python package from `openfisca_govcms_eligibility` to
+    `openfisca_rules`. Use `--country-package openfisca_rules` to test or serve.
+  - The rules are now copied unchanged from the repository where they are
+    maintained, so code uses a 160-character line length.
+  - Update the Australian Government bodies list and reword variable labels
+    in sentence case.
+  - Remove the PyPI packaging instructions; this package is not published.
+
 ## 0.0.1
 
 * Tax and benefit system evolution.

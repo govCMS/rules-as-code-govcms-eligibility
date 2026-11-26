@@ -1,5 +1,5 @@
 # Test files describe situations and their expected outcomes
-# We can run this test on our command line using `openfisca test openfisca_govcms_eligibility/tests/australian_government_name.yaml`
+# We can run this test on our command line using `openfisca test /app/openfisca-rules/openfisca_rules/tests/australian_government_name.yaml`
 #
 # Note: these tests use real entity names from the australian_government_name.csv source data.
 # If an entity is renamed or removed from the CSV, the relevant test will fail and should be
